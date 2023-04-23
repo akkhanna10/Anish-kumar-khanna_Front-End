@@ -13,4 +13,60 @@ The given code implements a simple List component using React. The List componen
 4. In the SingleListItem component, the `isSelected` prop should be passed as a boolean to determine the background color. 
 
 ## Fixed and Optimized Code 
+import React, { useState, useEffect, memo } from 'react';
+import PropTypes from 'prop-types';
+
+// Single List Item
+const SingleListItem = memo(({ index, isSelected, onClickHandler, text }) => {
+  return (
+    <li className={isSelected ? 'selected' : ''} onClick={() => onClickHandler(index)}>
+      {text}
+    </li>
+  );
+});
+
+SingleListItem.propTypes = {
+  index: PropTypes.number.isRequired,
+  isSelected: PropTypes.bool.isRequired,
+  onClickHandler: PropTypes.func.isRequired,
+  text: PropTypes.string.isRequired,
+};
+
+// List Component
+const List = memo(({ items }) => {
+  const [selectedIndex, setSelectedIndex] = useState(null);
+
+  useEffect(() => {
+    setSelectedIndex(null);
+  }, [items]);
+
+  const handleClick = (index) => {
+    setSelectedIndex(index);
+  };
+
+  return (
+    <ul>
+      {items.map((item, index) => (
+        <SingleListItem
+          key={index}
+          index={index}
+          isSelected={index === selectedIndex}
+          onClickHandler={handleClick}
+          text={item.text}
+        />
+      ))}
+    </ul>
+  );
+});
+
+List.propTypes = {
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      text: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+};
+
+export default List;
+
 
