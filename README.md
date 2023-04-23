@@ -13,6 +13,8 @@ The given code implements a simple List component using React. The List componen
 4. In the SingleListItem component, the `isSelected` prop should be passed as a boolean to determine the background color. 
 
 ## Fixed and Optimized Code 
+
+```
 import React, { useState, useEffect, memo } from 'react';
 import PropTypes from 'prop-types';
 
@@ -68,5 +70,5 @@ List.propTypes = {
 };
 
 export default List;
-
+```
 
